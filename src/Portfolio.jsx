@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 export default function Portfolio() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [mediaPage, setMediaPage] = useState(0);
 
   const carouselSlides = [
     {
@@ -37,8 +38,31 @@ export default function Portfolio() {
       title: 'Grow with Google.',
       description: 'Video feature highlighting Evolone\'s journey and impact.',
       image: 'google-feature'
+    },
+    {
+      title: 'TechCrunch.',
+      description: 'Featured startup using AI to bridge the digital divide.',
+      image: 'techcrunch-feature'
+    },
+    {
+      title: 'Forbes 30 Under 30.',
+      description: 'Recognized for innovation in robotics and social impact.',
+      image: 'forbes-feature'
+    },
+    {
+      title: 'NPR Interview.',
+      description: 'Discussing the future of accessible technology.',
+      image: 'npr-feature'
     }
   ];
+
+  const mediaPerPage = 3;
+  const totalMediaPages = Math.ceil(mediaAppearances.length / mediaPerPage);
+
+  const getCurrentMedia = () => {
+    const start = mediaPage * mediaPerPage;
+    return mediaAppearances.slice(start, start + mediaPerPage);
+  };
 
   return (
     <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-stone-100 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
@@ -48,8 +72,8 @@ export default function Portfolio() {
           <div className="text-2xl font-light tracking-wide">EVOLONE</div>
           <div className="flex gap-8 text-sm">
             <a href="#home" className="hover:text-stone-600 transition">Home</a>
-            <a href="#projects" className="hover:text-stone-600 transition">Projects</a>
-            <a href="#publications" className="hover:text-stone-600 transition">Publications</a>
+            <a href="/projects" className="hover:text-stone-600 transition">Projects</a>
+            <a href="/publications" className="hover:text-stone-600 transition">Publications</a>
             <a href="#about" className="hover:text-stone-600 transition">About Me</a>
           </div>
         </div>
@@ -134,7 +158,7 @@ export default function Portfolio() {
             <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-16">Media Appearances.</h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
-              {mediaAppearances.map((item, idx) => (
+              {getCurrentMedia().map((item, idx) => (
                 <div
                   key={idx}
                   className="group relative bg-stone-900 rounded-lg overflow-hidden aspect-[3/5] cursor-pointer hover:shadow-xl transition"
@@ -164,12 +188,26 @@ export default function Portfolio() {
 
             {/* Navigation Arrows */}
             <div className="flex justify-center gap-4">
-              <button className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-stone-300 flex items-center justify-center hover:bg-stone-100 transition">
+              <button 
+                onClick={() => setMediaPage(Math.max(0, mediaPage - 1))}
+                disabled={mediaPage === 0}
+                className={`w-8 h-8 md:w-10 md:h-10 rounded-full border border-stone-300 flex items-center justify-center transition ${
+                  mediaPage === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-stone-100'
+                }`}
+              >
                 <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
-              <button className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-stone-900 text-white flex items-center justify-center hover:bg-stone-800 transition">
+              <button 
+                onClick={() => setMediaPage(Math.min(totalMediaPages - 1, mediaPage + 1))}
+                disabled={mediaPage === totalMediaPages - 1}
+                className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition ${
+                  mediaPage === totalMediaPages - 1 
+                    ? 'bg-stone-300 cursor-not-allowed' 
+                    : 'bg-stone-900 text-white hover:bg-stone-800'
+                }`}
+              >
                 <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
