@@ -74,7 +74,7 @@ export default function Portfolio() {
             <a href="#home" className="hover:text-stone-600 transition">Home</a>
             <a href="/projects" className="hover:text-stone-600 transition">Projects</a>
             <a href="/publications" className="hover:text-stone-600 transition">Publications</a>
-            <a href="#about" className="hover:text-stone-600 transition">About Me</a>
+            <a href="/about" className="hover:text-stone-600 transition">About Me</a>
           </div>
         </div>
       </nav>
@@ -82,7 +82,7 @@ export default function Portfolio() {
       {/* Hero Section - Carousel */}
       <section className="bg-white snap-start snap-always min-h-screen" id="home">
         <div className="h-screen flex flex-col justify-center py-8">
-          <div className="max-w-6xl mx-auto px-6 w-full">
+          <div className="max-w-7xl mx-auto px-6 w-full">
             {/* Carousel Container */}
             <div className="relative overflow-hidden group mb-6 md:mb-10">
               <div 
@@ -125,13 +125,18 @@ export default function Portfolio() {
       {/* About Me Section */}
       <section className="bg-stone-100 snap-start snap-always min-h-screen" id="about">
         <div className="h-screen flex flex-col justify-center py-8 overflow-y-auto">
-          <div className="max-w-6xl mx-auto px-6 w-full">
+          <div className="max-w-7xl mx-auto px-6 w-full">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-16">About Me.</h2>
             
             <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-              {/* Placeholder Image - Left */}
-              <div className="bg-gradient-to-br from-stone-300 to-stone-400 rounded-lg aspect-square flex items-center justify-center text-stone-600 text-lg md:text-xl font-medium shadow-lg">
-                Profile Image
+              {/* Profile Image - Left */}
+              <div className="rounded-lg aspect-square overflow-hidden bg-stone-100">
+                <img 
+                  src="/img/profile-pic2.png" 
+                  alt="Evolone Layne Profile" 
+                  className="w-full h-full object-cover block"
+                  style={{ transform: 'scale(1.02)', objectPosition: 'center' }}
+                />
               </div>
 
               {/* Text Content - Right */}
@@ -141,9 +146,14 @@ export default function Portfolio() {
                 </p>
 
                 <div>
-                  <button className="bg-black text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full hover:bg-stone-800 transition text-sm md:text-base">
-                    Learn More.
-                  </button>
+                  <a 
+                    href="/cv/Layne_Evolone_CV.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block bg-black text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full hover:bg-stone-800 transition text-sm md:text-base"
+                  >
+                    View My CV.
+                  </a>
                 </div>
               </div>
             </div>
@@ -154,7 +164,7 @@ export default function Portfolio() {
       {/* Media Appearances Section */}
       <section className="bg-white snap-start snap-always min-h-screen">
         <div className="h-screen flex flex-col justify-end pb-20 overflow-y-auto">
-          <div className="max-w-6xl mx-auto px-6 w-full">
+          <div className="max-w-7xl mx-auto px-6 w-full">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-16">Media Appearances.</h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">

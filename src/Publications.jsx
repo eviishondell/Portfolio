@@ -148,10 +148,10 @@ export default function Publications() {
       </nav>
 
       {/* Conference Publications Section */}
-      <section className="bg-white snap-start snap-always min-h-screen">
-        <div className="h-screen flex flex-col justify-center py-8 overflow-y-auto">
-          <div className="max-w-6xl mx-auto px-6 w-full">
-            <div className="mb-8 md:mb-16">
+      <section className="bg-white snap-start snap-always min-h-screen pt-24">
+        <div className="min-h-screen flex flex-col py-8 overflow-y-auto">
+          <div className="max-w-7xl mx-auto px-6 w-full">
+            <div className="mb-8 md:mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-2">Conference Publications.</h2>
               <p className="text-stone-600 text-base md:text-lg">Peer-reviewed research published at top-tier conferences</p>
             </div>
@@ -219,10 +219,10 @@ export default function Publications() {
       </section>
 
       {/* Workshop Publications Section */}
-      <section className="bg-stone-100 snap-start snap-always min-h-screen">
-        <div className="h-screen flex flex-col justify-center py-8 overflow-y-auto">
-          <div className="max-w-6xl mx-auto px-6 w-full">
-            <div className="mb-8 md:mb-16">
+      <section className="bg-stone-100 snap-start snap-always min-h-screen pt-24">
+        <div className="min-h-screen flex flex-col py-8 overflow-y-auto">
+          <div className="max-w-7xl mx-auto px-6 w-full">
+            <div className="mb-8 md:mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-2">Workshop Papers & Posters.</h2>
               <p className="text-stone-600 text-base md:text-lg">Extended abstracts and presentations at academic workshops</p>
             </div>
