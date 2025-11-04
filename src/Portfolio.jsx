@@ -1,27 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+function useScrollAnimation() {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return [ref, isVisible];
+}
 
 export default function Portfolio() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mediaPage, setMediaPage] = useState(0);
-
-  const carouselSlides = [
-    {
-      id: 1,
-      placeholderImage: 'Glamour Magazine Feature'
-    },
-    {
-      id: 2,
-      placeholderImage: 'Feature Slide 2'
-    },
-    {
-      id: 3,
-      placeholderImage: 'Feature Slide 3'
-    },
-    {
-      id: 4,
-      placeholderImage: 'Feature Slide 4'
-    }
-  ];
+  const [heroRef, heroVisible] = useScrollAnimation();
+  const [aboutRef, aboutVisible] = useScrollAnimation();
 
   const mediaAppearances = [
     {
@@ -73,80 +82,84 @@ export default function Portfolio() {
         </div>
       </nav>
 
-      {/* Hero Section - Carousel */}
-      <section className="bg-white snap-start snap-always min-h-screen" id="home">
-        <div className="h-screen flex flex-col justify-center py-8">
-          <div className="max-w-7xl mx-auto px-6 w-full">
-            {/* Carousel Container */}
-            <div className="relative overflow-hidden group mb-6 md:mb-10">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ 
-                  transform: `translateX(-${currentSlide * 100}%)`,
-                  animation: currentSlide === 0 ? 'wiggle 2s ease-in-out 3' : 'none'
-                }}
-              >
-                {carouselSlides.map((slide) => (
-                  <div key={slide.id} className="w-full flex-shrink-0">
-                    <div className="w-full">
-                      {/* Placeholder Image for entire slide */}
-                      <div className="bg-gradient-to-br from-stone-200 to-stone-300 rounded-lg aspect-video flex items-center justify-center text-stone-600 text-xl md:text-2xl font-medium shadow-lg">
-                        {slide.placeholderImage}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+{/* Hero Section - Apple Style with Animations */}
+<section ref={heroRef} className="bg-white snap-start snap-always min-h-screen relative" id="home">
+  <div className="h-screen flex flex-col justify-center items-center px-6">
+    <div className="max-w-4xl mx-auto text-center space-y-6">
+      
+      {/* Main Headline */}
+      <h1 className={`text-5xl md:text-7xl lg:text-8xl font-semibold text-stone-900 tracking-tight leading-none transition-all duration-1000 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        Building robots that<br/>understand people.
+      </h1>
+      
+      {/* Subheadline */}
+      <p className={`text-xl md:text-2xl text-stone-600 font-normal max-w-3xl mx-auto transition-all duration-1000 delay-500 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        PhD research in human-robot interaction. Working directly with people with disabilities to design technology that actually works for them — not around them.
+      </p>
 
-            {/* Slide Indicators */}
-            <div className="flex justify-center gap-3">
-              {carouselSlides.map((slide, idx) => (
-                <button
-                  key={slide.id}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    currentSlide === idx ? 'bg-stone-500 scale-110' : 'bg-stone-300 hover:bg-stone-400'
-                  }`}
-                  aria-label={`Slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Clean CTAs */}
+      <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 transition-all duration-1000 delay-1000 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <a 
+          href="#about"
+          className="text-blue-600 hover:text-blue-700 text-lg font-normal hover:underline transition-all"
+        >
+          Learn more →
+        </a>
+        <span className="hidden sm:block text-stone-300">|</span>
+        <a 
+          href="/cv/Layne_Evolone_CV.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-700 text-lg font-normal hover:underline transition-all"
+        >
+          View CV →
+        </a>
+      </div>
 
-      {/* About Me Section */}
-      <section className="bg-stone-100 snap-start snap-always min-h-screen" id="about">
-        <div className="h-screen flex flex-col justify-center py-8 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-6 w-full">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-16">About Me.</h2>
+    </div>
+
+    {/* Signature */}
+    <div className={`absolute bottom-20 text-stone-400 text-sm font-normal transition-all duration-1000 delay-1500 ${heroVisible ? 'opacity-100' : 'opacity-0'}`}>
+      Evolone Layne
+    </div>
+  </div>
+</section>
+
+           {/* About Me Section */}
+      <section ref={aboutRef} className="bg-stone-100 snap-start snap-always min-h-screen" id="about">
+        <div className="min-h-screen flex items-center py-20">
+          <div className="max-w-6xl mx-auto px-6 w-full">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-16 transition-all duration-1000 ${aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              About Me.
+            </h2>
             
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16">
+            <div className="grid md:grid-cols-2 gap-16 items-center">
               {/* Profile Image - Left */}
-              <div className="rounded-lg aspect-square overflow-hidden bg-stone-100">
-                <img 
-                  src="/img/profile-pic2.png" 
-                  alt="Evolone Layne Profile" 
-                  className="w-full h-full object-cover block"
-                  style={{ transform: 'scale(1.02)', objectPosition: 'center' }}
-                />
+              <div className={`transition-all duration-1000 delay-200 ${aboutVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+                <div className="rounded-2xl overflow-hidden shadow-2xl">
+                  <img 
+                    src="/img/profile-pic2.png" 
+                    alt="Evolone Layne Profile" 
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: 'center 20%' }}
+                  />
+                </div>
               </div>
 
               {/* Text Content - Right */}
-              <div className="max-w-md">
-                <p className="text-base md:text-lg leading-relaxed mb-6 md:mb-8">
-                  My name is Evolone Layne, and I'm a first-year PhD student at the Paul G. Allen School of Computer Science & Engineering at the University of Washington. I'm co-advised by <span className="font-bold">Maya Cakmak</span> from the <span className="font-bold">Human-Computer Robotics Lab</span> and <span className="font-bold">Siddhartha Srinivasa</span> from the <span className="font-bold">Personal Robotics Lab</span>. My research focuses on developing <span className="font-bold">assistive robots for individuals with disabilities</span>. I earned my <span className="font-bold">Master's degree in Human-Computer Interaction</span> from <span className="font-bold">Carnegie Mellon University</span> in July 2025, and my <span className="font-bold">Bachelor's degree in Computer Science</span> from <span className="font-bold">Howard University</span> in December 2023.
+              <div className={`transition-all duration-1000 delay-400 ${aboutVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+                <p className="text-lg leading-relaxed mb-8 text-stone-700">
+                  My name is Evolone Layne, and I&apos;m a first-year PhD student at the Paul G. Allen School of Computer Science & Engineering at the University of Washington. I&apos;m co-advised by <span className="font-semibold text-stone-900">Maya Cakmak</span> from the <span className="font-semibold text-stone-900">Human-Computer Robotics Lab</span> and <span className="font-semibold text-stone-900">Siddhartha Srinivasa</span> from the <span className="font-semibold text-stone-900">Personal Robotics Lab</span>. My research focuses on developing <span className="font-semibold text-stone-900">assistive robots for individuals with disabilities</span>. I earned my <span className="font-semibold text-stone-900">Master&apos;s degree in Human-Computer Interaction</span> from <span className="font-semibold text-stone-900">Carnegie Mellon University</span> in July 2025, and my <span className="font-semibold text-stone-900">Bachelor&apos;s degree in Computer Science</span> from <span className="font-semibold text-stone-900">Howard University</span> in December 2023.
                 </p>
 
-                <div>
+                <div className={`transition-all duration-1000 delay-600 ${aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                   <a 
                     href="/cv/Layne_Evolone_CV.pdf" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-block bg-black text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full hover:bg-stone-800 transition text-sm md:text-base"
+                    className="inline-block bg-stone-900 text-white px-8 py-3 rounded-full hover:bg-stone-800 transition-all text-base font-medium"
                   >
-                    View My CV.
+                    View My CV
                   </a>
                 </div>
               </div>
@@ -154,7 +167,6 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
-
       {/* Media Appearances Section */}
       <section className="bg-white snap-start snap-always min-h-screen pt-32 pb-8">
         <div className="max-w-7xl mx-auto px-6 w-full">
