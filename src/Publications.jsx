@@ -1,8 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+function useScrollAnimation() {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return [ref, isVisible];
+}
 
 export default function Publications() {
-  const [conferenceePage, setConferencePage] = useState(0);
-  const [workshopPage, setWorkshopPage] = useState(0);
+  const [heroRef, heroVisible] = useScrollAnimation();
+  const [conferenceRef, conferenceVisible] = useScrollAnimation();
+  const [workshopRef, workshopVisible] = useScrollAnimation();
 
   const conferencePublications = [
     {
@@ -31,33 +58,6 @@ export default function Publications() {
       year: '2024',
       type: 'Conference Paper',
       pdf: 'conference-paper-3.pdf'
-    },
-    {
-      id: 4,
-      title: 'Tactile Sensing for Delicate Object Manipulation',
-      authors: 'Evolone Layne, Research Team',
-      venue: 'Robotics: Science and Systems (RSS)',
-      year: '2024',
-      type: 'Conference Paper',
-      pdf: 'conference-paper-4.pdf'
-    },
-    {
-      id: 5,
-      title: 'Accessible Technology Design Principles',
-      authors: 'Evolone Layne, Accessibility Research Group',
-      venue: 'ACM Conference on Human Factors in Computing Systems (CHI)',
-      year: '2024',
-      type: 'Conference Paper',
-      pdf: 'conference-paper-5.pdf'
-    },
-    {
-      id: 6,
-      title: 'Multi-Agent Coordination in Dynamic Environments',
-      authors: 'Evolone Layne, Siddhartha Srinivasa, Collaborators',
-      venue: 'International Conference on Autonomous Agents and Multiagent Systems (AAMAS)',
-      year: '2023',
-      type: 'Conference Paper',
-      pdf: 'conference-paper-6.pdf'
     }
   ];
 
@@ -88,202 +88,148 @@ export default function Publications() {
       year: '2024',
       type: 'Workshop Paper',
       pdf: 'workshop-paper-3.pdf'
-    },
-    {
-      id: 4,
-      title: 'Inclusive Design in Human-Robot Interaction',
-      authors: 'Evolone Layne, HRI Research Team',
-      venue: 'HRI Workshop on Inclusive HRI',
-      year: '2023',
-      type: 'Workshop Paper',
-      pdf: 'workshop-paper-4.pdf'
-    },
-    {
-      id: 5,
-      title: 'Real-Time Learning in Assistive Robotics',
-      authors: 'Evolone Layne, Maya Cakmak',
-      venue: 'RSS Workshop on Assistive Robotics',
-      year: '2023',
-      type: 'Workshop Paper',
-      pdf: 'workshop-paper-5.pdf'
-    },
-    {
-      id: 6,
-      title: 'Ethical Considerations in AI Development',
-      authors: 'Evolone Layne, Ethics Committee',
-      venue: 'AAAI/ACM Conference on AI, Ethics, and Society Workshop',
-      year: '2023',
-      type: 'Workshop Paper',
-      pdf: 'workshop-paper-6.pdf'
     }
   ];
 
-  const publicationsPerPage = 3;
-  const totalConferencePages = Math.ceil(conferencePublications.length / publicationsPerPage);
-  const totalWorkshopPages = Math.ceil(workshopPublications.length / publicationsPerPage);
-
-  const getCurrentConference = () => {
-    const start = conferenceePage * publicationsPerPage;
-    return conferencePublications.slice(start, start + publicationsPerPage);
-  };
-
-  const getCurrentWorkshop = () => {
-    const start = workshopPage * publicationsPerPage;
-    return workshopPublications.slice(start, start + publicationsPerPage);
-  };
-
   return (
-    <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-stone-100" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+    <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-white font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 bg-stone-100 z-50 border-b border-stone-200">
+      <nav className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <a href="/" className="text-2xl font-light tracking-wide">EVOLONE</a>
           <div className="flex gap-8 text-sm">
             <a href="/" className="hover:text-stone-600 transition">Home</a>
             <a href="/projects" className="hover:text-stone-600 transition">Projects</a>
             <a href="/publications" className="hover:text-stone-600 transition font-semibold">Publications</a>
-            <a href="/about" className="hover:text-stone-600 transition">About Me</a>
+            <a href="/#about" className="hover:text-stone-600 transition">About Me</a>
           </div>
         </div>
       </nav>
 
+      {/* Hero Section */}
+      <section ref={heroRef} className="bg-white snap-start snap-always min-h-screen relative">
+        <div className="h-screen flex flex-col justify-center items-center px-6">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            
+            <h1 className={`text-5xl md:text-7xl lg:text-8xl font-semibold text-stone-900 tracking-tight leading-none transition-all duration-1000 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              Publications.
+            </h1>
+            
+            <p className={`text-xl md:text-2xl text-stone-600 font-normal max-w-3xl mx-auto transition-all duration-1000 delay-500 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              Peer-reviewed research in robotics, human-computer interaction, and accessible technology design.
+            </p>
+
+            <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 transition-all duration-1000 delay-1000 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <a 
+                href="#conference"
+                className="text-blue-600 hover:text-blue-700 text-lg font-normal hover:underline transition-all"
+              >
+                Conference papers →
+              </a>
+              <span className="hidden sm:block text-stone-300">|</span>
+              <a 
+                href="#workshop"
+                className="text-blue-600 hover:text-blue-700 text-lg font-normal hover:underline transition-all"
+              >
+                Workshop papers →
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* Conference Publications Section */}
-      <section className="bg-white snap-start snap-always min-h-screen pt-24">
-        <div className="min-h-screen flex flex-col py-8 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-6 w-full">
-            <div className="mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-2">Conference Publications.</h2>
-              <p className="text-stone-600 text-base md:text-lg">Peer-reviewed research published at top-tier conferences</p>
+      <section ref={conferenceRef} id="conference" className="bg-stone-100 snap-start snap-always min-h-screen">
+        <div className="min-h-screen flex items-center py-20">
+          <div className="max-w-5xl mx-auto px-6 w-full">
+            
+            <div className={`text-center mb-16 transition-all duration-1000 ${conferenceVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <h2 className="text-4xl md:text-6xl font-semibold text-stone-900 mb-4">
+                Conference Papers.
+              </h2>
+              <p className="text-xl text-stone-600 font-normal">
+                Peer-reviewed research at top-tier venues
+              </p>
             </div>
             
-            <div className="grid grid-cols-1 gap-6 md:gap-8 mb-8 md:mb-12">
-              {getCurrentConference().map((pub) => (
+            <div className="space-y-6">
+              {conferencePublications.map((pub, idx) => (
                 <div
                   key={pub.id}
-                  className="group relative bg-white border-2 border-stone-900 rounded-lg p-6 hover:shadow-xl transition cursor-pointer"
+                  className={`group bg-white rounded-2xl p-6 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-stone-200 ${conferenceVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  style={{ transitionDelay: `${(idx + 1) * 150}ms` }}
                 >
-                  <div className="flex justify-between items-start gap-4">
+                  <div className="flex justify-between items-start gap-6">
                     <div className="flex-grow">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-xs font-bold bg-stone-900 text-white px-3 py-1 rounded-full">
-                          {pub.type}
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="text-xs font-semibold text-stone-600">
+                          {pub.year}
                         </span>
-                        <span className="text-sm text-stone-600">{pub.year}</span>
                       </div>
                       
-                      <h3 className="font-bold text-xl mb-2">{pub.title}</h3>
+                      <h3 className="font-semibold text-xl md:text-2xl text-stone-900 mb-3 leading-snug">{pub.title}</h3>
                       <p className="text-sm text-stone-600 mb-2">{pub.authors}</p>
-                      <p className="text-sm text-stone-800 italic">{pub.venue}</p>
+                      <p className="text-sm text-stone-700 italic">{pub.venue}</p>
                     </div>
 
                     {/* PDF Icon */}
-                    <div className="flex-shrink-0 bg-stone-900 rounded-full w-12 h-12 flex items-center justify-center group-hover:scale-110 transition">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-stone-100 group-hover:bg-stone-900 flex items-center justify-center transition-all">
+                      <svg className="w-5 h-5 text-stone-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Navigation Arrows */}
-            <div className="flex justify-center gap-4">
-              <button 
-                onClick={() => setConferencePage(Math.max(0, conferenceePage - 1))}
-                disabled={conferenceePage === 0}
-                className={`w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center transition ${
-                  conferenceePage === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-stone-100'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button 
-                onClick={() => setConferencePage(Math.min(totalConferencePages - 1, conferenceePage + 1))}
-                disabled={conferenceePage === totalConferencePages - 1}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
-                  conferenceePage === totalConferencePages - 1 
-                    ? 'bg-stone-300 cursor-not-allowed' 
-                    : 'bg-stone-900 text-white hover:bg-stone-800'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Workshop Publications Section */}
-      <section className="bg-stone-100 snap-start snap-always min-h-screen pt-24">
-        <div className="min-h-screen flex flex-col py-8 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-6 w-full">
-            <div className="mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-2">Workshop Papers & Posters.</h2>
-              <p className="text-stone-600 text-base md:text-lg">Extended abstracts and presentations at academic workshops</p>
+      <section ref={workshopRef} id="workshop" className="bg-white snap-start snap-always min-h-screen">
+        <div className="min-h-screen flex items-center py-20">
+          <div className="max-w-5xl mx-auto px-6 w-full">
+            
+            <div className={`text-center mb-16 transition-all duration-1000 ${workshopVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <h2 className="text-4xl md:text-6xl font-semibold text-stone-900 mb-4">
+                Workshop Papers.
+              </h2>
+              <p className="text-xl text-stone-600 font-normal">
+                Extended abstracts and presentations
+              </p>
             </div>
             
-            <div className="grid grid-cols-1 gap-6 md:gap-8 mb-8 md:mb-12">
-              {getCurrentWorkshop().map((pub) => (
+            <div className="space-y-6">
+              {workshopPublications.map((pub, idx) => (
                 <div
                   key={pub.id}
-                  className="group relative bg-stone-900 text-white rounded-lg p-6 hover:shadow-xl transition cursor-pointer"
+                  className={`group bg-stone-100 rounded-2xl p-6 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 ${workshopVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  style={{ transitionDelay: `${(idx + 1) * 150}ms` }}
                 >
-                  <div className="flex justify-between items-start gap-4">
+                  <div className="flex justify-between items-start gap-6">
                     <div className="flex-grow">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-xs font-bold bg-white text-stone-900 px-3 py-1 rounded-full">
-                          {pub.type}
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="text-xs font-semibold text-stone-600">
+                          {pub.year}
                         </span>
-                        <span className="text-sm text-stone-300">{pub.year}</span>
                       </div>
                       
-                      <h3 className="font-bold text-xl mb-2">{pub.title}</h3>
-                      <p className="text-sm text-stone-300 mb-2">{pub.authors}</p>
-                      <p className="text-sm text-white italic">{pub.venue}</p>
+                      <h3 className="font-semibold text-xl md:text-2xl text-stone-900 mb-3 leading-snug">{pub.title}</h3>
+                      <p className="text-sm text-stone-600 mb-2">{pub.authors}</p>
+                      <p className="text-sm text-stone-700 italic">{pub.venue}</p>
                     </div>
 
                     {/* PDF Icon */}
-                    <div className="flex-shrink-0 bg-white rounded-full w-12 h-12 flex items-center justify-center group-hover:scale-110 transition">
-                      <svg className="w-6 h-6 text-stone-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white group-hover:bg-stone-900 flex items-center justify-center transition-all">
+                      <svg className="w-5 h-5 text-stone-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Navigation Arrows */}
-            <div className="flex justify-center gap-4">
-              <button 
-                onClick={() => setWorkshopPage(Math.max(0, workshopPage - 1))}
-                disabled={workshopPage === 0}
-                className={`w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center transition ${
-                  workshopPage === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-stone-100'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button 
-                onClick={() => setWorkshopPage(Math.min(totalWorkshopPages - 1, workshopPage + 1))}
-                disabled={workshopPage === totalWorkshopPages - 1}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
-                  workshopPage === totalWorkshopPages - 1 
-                    ? 'bg-stone-300 cursor-not-allowed' 
-                    : 'bg-stone-900 text-white hover:bg-stone-800'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
