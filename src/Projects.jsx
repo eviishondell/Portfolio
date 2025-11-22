@@ -26,58 +26,180 @@ function useScrollAnimation() {
   return [ref, isVisible];
 }
 
+function ProjectCarousel({ projects, visible, variant = 'light' }) {
+  const scrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', checkScroll);
+      return () => scrollElement.removeEventListener('scroll', checkScroll);
+    }
+  }, [projects]);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const cardBg = variant === 'dark' ? 'bg-stone-100' : 'bg-white';
+  const imageBg = variant === 'dark' 
+    ? 'from-stone-300 to-stone-400 border-stone-300' 
+    : 'from-stone-200 to-stone-300 border-stone-200';
+  const tagStyle = variant === 'dark'
+    ? 'bg-stone-900 text-white'
+    : 'bg-stone-100 text-stone-700';
+
+  return (
+    <div className="relative group">
+      {/* Scroll Container with padding for shadow space */}
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth py-8 -my-8"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {projects.map((project, idx) => (
+<div
+  key={project.id}
+  className={`flex-shrink-0 w-[calc(33.333%-1rem)] min-w-[280px] ${cardBg} rounded-2xl overflow-hidden hover:-translate-y-1 transition-all duration-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+  style={{ 
+    transitionDelay: `${(idx + 1) * 150}ms`,
+    boxShadow: 'none',
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.15)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.boxShadow = 'none';
+  }}
+>
+  <div className="aspect-[4/3] overflow-hidden border-b border-stone-200">
+    <img 
+      src={project.image} 
+      alt={project.title}
+      className="w-full h-full object-cover"
+    />
+  </div>
+  
+  <div className="p-6">
+    <h3 className="font-semibold text-lg text-stone-900 mb-2">{project.title}</h3>
+    <p className="text-stone-600 text-sm leading-relaxed mb-4">{project.description}</p>
+    
+    <div className="flex flex-wrap gap-2">
+      {project.tags.map((tag, idx) => (
+        <span key={idx} className={`text-xs ${tagStyle} px-3 py-1 rounded-full`}>
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+        ))}
+      </div>
+
+      {/* Navigation Buttons */}
+      {canScrollLeft && (
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm rounded-full p-3 shadow-md hover:shadow-lg transition-all opacity-0 group-hover:opacity-100 z-20 hover:scale-105"
+          aria-label="Scroll left"
+        >
+          <svg className="w-5 h-5 text-stone-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
+
+      {canScrollRight && (
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm rounded-full p-3 shadow-md hover:shadow-lg transition-all opacity-0 group-hover:opacity-100 z-20 hover:scale-105"
+          aria-label="Scroll right"
+        >
+          <svg className="w-5 h-5 text-stone-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function Projects() {
   const [heroRef, heroVisible] = useScrollAnimation();
   const [roboticsRef, roboticsVisible] = useScrollAnimation();
   const [softwareRef, softwareVisible] = useScrollAnimation();
   
-  const roboticsProjects = [
-    {
-      id: 1,
-      title: 'Assistive Robot for Daily Tasks',
-      description: 'Developing autonomous systems to assist individuals with disabilities in performing daily activities.',
-      image: 'robotics-project-1',
-      tags: ['Robotics', 'AI', 'Accessibility']
-    },
-    {
-      id: 2,
-      title: 'Human-Robot Interaction Study',
-      description: 'Research on improving natural communication between humans and robotic systems.',
-      image: 'robotics-project-2',
-      tags: ['HRI', 'Research', 'UX']
-    },
-    {
-      id: 3,
-      title: 'Adaptive Manipulation System',
-      description: 'Creating adaptive robotic arms that learn from user preferences and environments.',
-      image: 'robotics-project-3',
-      tags: ['Machine Learning', 'Robotics', 'Control Systems']
-    }
-  ];
+const roboticsProjects = [
+  {
+    id: 1,
+    title: 'VLA Framework for Mobile Impairments',
+    description: 'Designing a comprehensive framework to guide the development of vision-language-action robot foundation models that better serve users with mobility impairments.',
+    image: '/img/vla.png',
+    tags: ['Robotics', 'AI', 'Accessibility', 'HRI']
+  },
+  {
+    id: 2,
+    title: 'Articutool: Assistive Feeding Research',
+    description: 'Conducting human factors research on robotic feeding assistance systems to inform the design and development of Articutool for users with mobility impairments.',
+    image: '/img/ADA.png',
+    tags: ['HRI', 'Research', 'Assistive Tech']
+  },
+  {
+    id: 3,
+    title: 'Humanoid Robots in Home Environments',
+    description: 'Exploring user perceptions and acceptance of humanoid robots in domestic settings through qualitative user studies and ethnographic research to inform future design of assistive technologies.',
+    image: '/img/humanoid.png',
+    tags: ['User Studies', 'Robotics', 'HRI']
+  }
+];
 
-  const softwareProjects = [
-    {
-      id: 1,
-      title: 'AI Music Generation Platform',
-      description: 'Platform that merges music composition with artificial intelligence for creative experiences.',
-      image: 'software-project-1',
-      tags: ['AI', 'Music', 'Web Development']
-    },
-    {
-      id: 2,
-      title: 'Community Empowerment App',
-      description: 'Mobile application designed to connect and empower underrepresented communities through technology.',
-      image: 'software-project-2',
-      tags: ['Mobile', 'Social Impact', 'React Native']
-    },
-    {
-      id: 3,
-      title: 'Educational VR Experience',
-      description: 'Virtual reality platform for immersive STEM education in underserved schools.',
-      image: 'software-project-3',
-      tags: ['VR', 'Education', 'Unity']
-    }
-  ];
+const softwareProjects = [
+  {
+    id: 1,
+    title: 'Data Visualization for Cycle Tracking',
+    description: 'Platform that merges music composition with artificial intelligence for creative experiences.',
+    image: '/img/cycle-track.png',
+    tags: ['AI', 'Music', 'Web Development']
+  },
+  {
+    id: 2,
+    title: 'Self-Diagnosing PMDD',
+    description: 'Mobile application designed to connect and empower underrepresented communities through technology.',
+    image: '/img/pmdd.png',
+    tags: ['Mobile', 'Social Impact', 'React Native']
+  },
+  {
+    id: 3,
+    title: 'Smartstack Watch Face',
+    description: 'Virtual reality platform for immersive STEM education in underserved schools.',
+    image: '/img/siri.png',
+    tags: ['VR', 'Education', 'Unity']
+  },
+  {
+    id: 4,
+    title: 'WatchOS Color Picker',
+    description: 'Virtual reality platform for immersive STEM education in underserved schools.',
+    image: '/img/color-pick.png',
+    tags: ['VR', 'Education', 'Unity']
+  }
+];
 
   return (
     <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-white font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
@@ -89,7 +211,7 @@ export default function Projects() {
             <a href="/" className="hover:text-stone-600 transition">Home</a>
             <a href="/projects" className="hover:text-stone-600 transition font-semibold">Projects</a>
             <a href="/publications" className="hover:text-stone-600 transition">Publications</a>
-            <a href="/#about" className="hover:text-stone-600 transition">About Me</a>
+            <a href="/about" className="hover:text-stone-600 transition">About Me</a>
           </div>
         </div>
       </nav>
@@ -130,7 +252,7 @@ export default function Projects() {
       {/* Robotics Projects Section */}
       <section ref={roboticsRef} id="robotics" className="bg-stone-100 snap-start snap-always min-h-screen">
         <div className="min-h-screen flex items-center py-20">
-          <div className="max-w-6xl mx-auto px-6 w-full">
+          <div className="max-w-7xl mx-auto px-6 w-full">
             
             <div className={`text-center mb-16 transition-all duration-1000 ${roboticsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <h2 className="text-4xl md:text-6xl font-semibold text-stone-900 mb-4">
@@ -141,32 +263,7 @@ export default function Projects() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {roboticsProjects.map((project, idx) => (
-                <div
-                  key={project.id}
-                  className={`group bg-white rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 ${roboticsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-                  style={{ transitionDelay: `${(idx + 1) * 150}ms` }}
-                >
-                  <div className="aspect-[4/3] bg-gradient-to-br from-stone-200 to-stone-300 flex items-center justify-center text-stone-600 text-sm border-b border-stone-200">
-                    {project.image}
-                  </div>
-                  
-                  <div className="p-6">
-                    <h3 className="font-semibold text-lg text-stone-900 mb-2">{project.title}</h3>
-                    <p className="text-stone-600 text-sm leading-relaxed mb-4">{project.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, idx) => (
-                        <span key={idx} className="text-xs bg-stone-100 text-stone-700 px-3 py-1 rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ProjectCarousel projects={roboticsProjects} visible={roboticsVisible} variant="light" />
           </div>
         </div>
       </section>
@@ -174,7 +271,7 @@ export default function Projects() {
       {/* Software Projects Section */}
       <section ref={softwareRef} id="software" className="bg-white snap-start snap-always min-h-screen">
         <div className="min-h-screen flex items-center py-20">
-          <div className="max-w-6xl mx-auto px-6 w-full">
+          <div className="max-w-7xl mx-auto px-6 w-full">
             
             <div className={`text-center mb-16 transition-all duration-1000 ${softwareVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <h2 className="text-4xl md:text-6xl font-semibold text-stone-900 mb-4">
@@ -185,32 +282,7 @@ export default function Projects() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {softwareProjects.map((project, idx) => (
-                <div
-                  key={project.id}
-                  className={`group bg-stone-100 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 ${softwareVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-                  style={{ transitionDelay: `${(idx + 1) * 150}ms` }}
-                >
-                  <div className="aspect-[4/3] bg-gradient-to-br from-stone-300 to-stone-400 flex items-center justify-center text-stone-600 text-sm border-b border-stone-300">
-                    {project.image}
-                  </div>
-                  
-                  <div className="p-6 bg-white">
-                    <h3 className="font-semibold text-lg text-stone-900 mb-2">{project.title}</h3>
-                    <p className="text-stone-600 text-sm leading-relaxed mb-4">{project.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, idx) => (
-                        <span key={idx} className="text-xs bg-stone-900 text-white px-3 py-1 rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ProjectCarousel projects={softwareProjects} visible={softwareVisible} variant="dark" />
           </div>
         </div>
       </section>

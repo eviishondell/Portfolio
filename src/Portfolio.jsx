@@ -169,7 +169,7 @@ export default function Portfolio() {
             </p>
             
             <p className="text-lg leading-relaxed text-stone-700">
-              I&apos;m co-advised by <span className="font-semibold text-stone-900">Maya Cakmak</span> from the <span className="font-semibold text-stone-900">Human-Computer Robotics Lab</span> and <span className="font-semibold text-stone-900">Siddhartha Srinivasa</span> from the <span className="font-semibold text-stone-900">Personal Robotics Lab</span>.
+              I&apos;m co-advised by <span className="font-semibold text-stone-900">Maya Cakmak</span> from the <span className="font-semibold text-stone-900">Human-Centered Robotics Lab</span>.
             </p>
             
             <p className="text-lg leading-relaxed text-stone-700">
@@ -269,7 +269,7 @@ export default function Portfolio() {
         <div className="flex justify-center gap-3 max-w-3xl mx-auto flex-wrap">
           {/* LinkedIn */}
           <a
-            href="https://www.linkedin.com/in/evolone-layne"
+            href="https://www.linkedin.com/in/evolonelayne"
             target="_blank"
             rel="noopener noreferrer"
             className="group bg-white border border-stone-200 rounded-full px-5 py-2.5 hover:border-[#0A66C2] hover:bg-[#0A66C2] transition-all flex items-center gap-2"
@@ -282,7 +282,7 @@ export default function Portfolio() {
 
           {/* Gmail */}
           <a
-            href="mailto:your.evolone@uw.edu"
+            href="mailto:evolone@uw.edu"
             className="group bg-white border border-stone-200 rounded-full px-5 py-2.5 hover:border-[#EA4335] hover:bg-[#EA4335] transition-all flex items-center gap-2"
           >
             <svg className="w-4 h-4 text-stone-700 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
@@ -293,7 +293,7 @@ export default function Portfolio() {
 
           {/* Google Scholar */}
           <a
-            href="https://scholar.google.com/citations?user=YOUR_ID"
+            href="https://scholar.google.com/citations?hl=en&user=Qr2faHcAAAAJ"
             target="_blank"
             rel="noopener noreferrer"
             className="group bg-white border border-stone-200 rounded-full px-5 py-2.5 hover:border-[#4285F4] hover:bg-[#4285F4] transition-all flex items-center gap-2"

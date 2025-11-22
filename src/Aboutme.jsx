@@ -1,11 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+function useScrollAnimation() {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return [ref, isVisible];
+}
 
 export default function AboutMe() {
+  const [educationRef, educationVisible] = useScrollAnimation();
+  const [internshipsRef, internshipsVisible] = useScrollAnimation();
   const [internshipPage, setInternshipPage] = useState(0);
   const [flippedCards, setFlippedCards] = useState({
     education: {},
     internships: {}
   });
+
+  // Reset flipped cards when scrolling away from sections
+  useEffect(() => {
+    if (!educationVisible) {
+      setFlippedCards(prev => ({
+        ...prev,
+        education: {}
+      }));
+    }
+  }, [educationVisible]);
+
+  useEffect(() => {
+    if (!internshipsVisible) {
+      setFlippedCards(prev => ({
+        ...prev,
+        internships: {}
+      }));
+    }
+  }, [internshipsVisible]);
 
   const toggleCard = (section, index) => {
     setFlippedCards(prev => ({
@@ -23,24 +70,24 @@ export default function AboutMe() {
       degree: 'Bachelor of Science in Computer Science',
       years: '2020-2023',
       image: '/img/hu-img.png',
-      fellowships: ['Google Generation Scholarship', 'Karsh Stem Scholars Program'],
-      organizations: ['National Society of Black Engineers', 'Women in Computer Science']
+      fellowships: ['Thurgood Marshall College Fund Apple Scholarship', 'Crown Castle Opportunity Scholarship', 'Howard University Capstone Scholarship '],
+      organizations: ['National Society of Black Engineers', 'Google Developer Student Club', 'ColorStack Undergraduate Chapter']
     },
     {
       title: 'Carnegie Mellon University.',
       degree: 'Master of Human-Computer Interaction',
       years: '2024-2025',
       image: '/img/cmu-img.png',
-      fellowships: ['NSF Graduate Research Fellowship', 'CMU Presidential Fellowship'],
-      organizations: ['Human-Computer Interaction Institute', 'Graduate Student Assembly']
+      fellowships: ['National GEM Consortium Fellowship (Apple)', 'Carnegie Mellon University Robotics Pathways Fellowship'],
+      organizations: ['National Society of Black Engineers', 'Graduate Student Assembly', 'ColorStack Graduate Chapter']
     },
     {
       title: 'University of Washington.',
       degree: 'Doctorate of Philosophy in Computer Science & Engineering',
       years: '2025-2030',
       image: '/img/uw-img.png',
-      fellowships: ['NSF Graduate Research Fellowship', 'Paul G. Allen Fellowship'],
-      organizations: ['Personal Robotics Lab', 'Human-Centered Robotics Lab']
+      fellowships: ['National GEM Consortium Fellowship (MIT Lincoln Lab)', 'University of Washington College of Engineering Dean’s Fellowship','Herbold Fellowship', 'Donar Fellowship'],
+      organizations: ['National Society of Black Engineers', 'ColorStack' ]
     }
   ];
 
@@ -50,24 +97,24 @@ export default function AboutMe() {
       role: 'Software Engineering Intern',
       years: '2022-2024',
       image: '/img/apple-img.png',
-      fellowships: ['Apple Scholars Program'],
-      organizations: ['Apple Developer Academy', 'Swift Student Challenge']
+      skills: ['Swift', 'iOS Development', 'UIKit', 'SwiftUI'],
+      organizations: ['Watch Frameworks','Health Sensing Experience', 'Watch Complications']
     },
     {
       title: 'NASA.',
       role: 'Research & Development Intern',
       years: '2025',
       image: '/img/nasa-img.png',
-      fellowships: ['NASA Pathways Intern Program'],
-      organizations: ['NASA STEM Engagement', 'Jet Propulsion Laboratory']
+      skills: ['Swift', 'Data Visualization', 'Research', 'Rapid Prototyping'],
+      organizations: ['Human-Computer Interaction']
     },
     {
       title: 'MIT Lincoln Laboratory.',
       role: 'Research & Development Intern',
       years: '2025-Present',
       image: '/img/mit-img.png',
-      fellowships: ['Lincoln Laboratory Graduate Fellowship'],
-      organizations: ['AI Technology Group', 'Advanced Capabilities Group']
+      skills: ['React.js', 'Research', 'User Studies', 'Data Analysis'],
+      organizations: ['Group 42 - Transportation Safety & Resiliance ']
     }
   ];
 
@@ -95,16 +142,26 @@ export default function AboutMe() {
       </nav>
 
       {/* Education Section */}
-      <section className="pt-32 pb-8 bg-white snap-start snap-always min-h-screen">
+      <section ref={educationRef} className="pt-32 pb-8 bg-white snap-start snap-always min-h-screen">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12">Education.</h2>
+          <div className={`text-center mb-16 transition-all duration-1000 ${educationVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h2 className="text-4xl md:text-6xl font-semibold text-stone-900 mb-4">
+              Education.
+            </h2>
+            <p className="text-xl text-stone-600 font-normal">
+              Academic journey • Research foundation • Technical training
+            </p>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {education.map((item, idx) => (
               <div
                 key={idx}
-                className="relative aspect-[3/4] cursor-pointer"
-                style={{ perspective: '1000px' }}
+                className={`relative aspect-[3/4] cursor-pointer transition-all duration-1000 ${educationVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                style={{ 
+                  perspective: '1000px',
+                  transitionDelay: `${(idx + 1) * 150}ms`
+                }}
               >
                 <div
                   className={`relative w-full h-full transition-transform duration-500`}
@@ -147,65 +204,88 @@ export default function AboutMe() {
 
                   {/* Back of Card */}
                   <div
-                    className="absolute inset-0 bg-stone-900 rounded-2xl overflow-hidden shadow-lg p-6 flex flex-col"
+                    className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
                     style={{ 
                       backfaceVisibility: 'hidden',
                       transform: 'rotateY(180deg)'
                     }}
                   >
-                    <div className="flex-grow overflow-y-auto">
-                      <h3 className="text-white font-semibold text-lg md:text-xl mb-6">{item.title}</h3>
-                      
-                      {/* Fellowships */}
-                      <div className="mb-6">
-                        <h4 className="text-white/80 text-sm font-semibold mb-3 uppercase tracking-wide">Fellowships</h4>
-                        <ul className="space-y-2">
-                          {item.fellowships.map((fellowship, i) => (
-                            <li key={i} className="text-white/90 text-sm flex items-start">
-                              <span className="mr-2">•</span>
-                              <span>{fellowship}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      {/* Organizations */}
-                      <div>
-                        <h4 className="text-white/80 text-sm font-semibold mb-3 uppercase tracking-wide">Organizations</h4>
-                        <ul className="space-y-2">
-                          {item.organizations.map((org, i) => (
-                            <li key={i} className="text-white/90 text-sm flex items-start">
-                              <span className="mr-2">•</span>
-                              <span>{org}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                    {/* Blurred Background Image */}
+                    <div className="absolute inset-0">
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                        style={{ filter: 'blur(20px)', transform: 'scale(1.1)' }}
+                      />
+                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
                     </div>
-                    
-                    {/* Close Button */}
-                    <button
-                      onClick={() => toggleCard('education', idx)}
-                      className="mt-4 bg-white rounded-full w-10 h-10 flex items-center justify-center self-end hover:scale-110 transition"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
+
+                    {/* Content */}
+                    <div className="relative h-full p-8 flex flex-col">
+                      {/* Header */}
+                      <div className="mb-8">
+                        <h3 className="text-white font-semibold text-2xl mb-1 drop-shadow-lg">{item.title}</h3>
+                        <p className="text-white/80 text-sm drop-shadow">{item.years}</p>
+                      </div>
+
+                      <div className="flex-grow space-y-6">
+                        {/* Fellowships */}
+                        <div>
+                          <h4 className="text-white font-bold text-xs mb-3 uppercase tracking-wider drop-shadow">Fellowships</h4>
+                          <div className="space-y-2">
+                            {item.fellowships.map((fellowship, i) => (
+                              <div key={i} className="flex items-start">
+                                <div className="w-1.5 h-1.5 rounded-full bg-white/80 mt-2 mr-3 flex-shrink-0"></div>
+                                <span className="text-white/95 text-sm leading-relaxed drop-shadow">{fellowship}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        {/* Organizations */}
+                        <div>
+                          <h4 className="text-white font-bold text-xs mb-3 uppercase tracking-wider drop-shadow">Organizations</h4>
+                          <div className="space-y-2">
+                            {item.organizations.map((org, i) => (
+                              <div key={i} className="flex items-start">
+                                <div className="w-1.5 h-1.5 rounded-full bg-white/80 mt-2 mr-3 flex-shrink-0"></div>
+                                <span className="text-white/95 text-sm leading-relaxed drop-shadow">{org}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Close Button */}
+                      <button
+                        onClick={() => toggleCard('education', idx)}
+                        className="mt-6 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full w-10 h-10 flex items-center justify-center self-end transition-all hover:scale-105 border border-white/30"
+                      >
+                        <svg className="w-5 h-5 text-white drop-shadow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          {/* Navigation Arrows would go here if pagination is added */}
         </div>
       </section>
 
       {/* Internships Section */}
-      <section className="pt-32 pb-8 bg-white snap-start snap-always min-h-screen">
+      <section ref={internshipsRef} className="pt-32 pb-8 bg-white snap-start snap-always min-h-screen">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12">Internships.</h2>
+          <div className={`text-center mb-16 transition-all duration-1000 ${internshipsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h2 className="text-4xl md:text-6xl font-semibold text-stone-900 mb-4">
+              Internships.
+            </h2>
+            <p className="text-xl text-stone-600 font-normal">
+              Industry experience • Research development • Technical innovation
+            </p>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
             {getCurrentInternships().map((item, idx) => {
@@ -213,8 +293,11 @@ export default function AboutMe() {
               return (
                 <div
                   key={actualIdx}
-                  className="relative aspect-[3/4] cursor-pointer"
-                  style={{ perspective: '1000px' }}
+                  className={`relative aspect-[3/4] cursor-pointer transition-all duration-1000 ${internshipsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  style={{ 
+                    perspective: '1000px',
+                    transitionDelay: `${(idx + 1) * 150}ms`
+                  }}
                 >
                   <div
                     className={`relative w-full h-full transition-transform duration-500`}
@@ -257,51 +340,68 @@ export default function AboutMe() {
 
                     {/* Back of Card */}
                     <div
-                      className="absolute inset-0 bg-stone-900 rounded-2xl overflow-hidden shadow-lg p-6 flex flex-col"
+                      className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
                       style={{ 
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)'
                       }}
                     >
-                      <div className="flex-grow overflow-y-auto">
-                        <h3 className="text-white font-semibold text-lg md:text-xl mb-6">{item.title}</h3>
-                        
-                        {/* Fellowships */}
-                        <div className="mb-6">
-                          <h4 className="text-white/80 text-sm font-semibold mb-3 uppercase tracking-wide">Fellowships</h4>
-                          <ul className="space-y-2">
-                            {item.fellowships.map((fellowship, i) => (
-                              <li key={i} className="text-white/90 text-sm flex items-start">
-                                <span className="mr-2">•</span>
-                                <span>{fellowship}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        
-                        {/* Organizations */}
-                        <div>
-                          <h4 className="text-white/80 text-sm font-semibold mb-3 uppercase tracking-wide">Organizations</h4>
-                          <ul className="space-y-2">
-                            {item.organizations.map((org, i) => (
-                              <li key={i} className="text-white/90 text-sm flex items-start">
-                                <span className="mr-2">•</span>
-                                <span>{org}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                      {/* Blurred Background Image */}
+                      <div className="absolute inset-0">
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                          style={{ filter: 'blur(20px)', transform: 'scale(1.1)' }}
+                        />
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
                       </div>
-                      
-                      {/* Close Button */}
-                      <button
-                        onClick={() => toggleCard('internships', actualIdx)}
-                        className="mt-4 bg-white rounded-full w-10 h-10 flex items-center justify-center self-end hover:scale-110 transition"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
+
+                      {/* Content */}
+                      <div className="relative h-full p-8 flex flex-col">
+                        {/* Header */}
+                        <div className="mb-8">
+                          <h3 className="text-white font-semibold text-2xl mb-1 drop-shadow-lg">{item.title}</h3>
+                          <p className="text-white/80 text-sm drop-shadow">{item.years}</p>
+                        </div>
+
+                        <div className="flex-grow space-y-6">
+                          {/* Skills */}
+                          <div>
+                            <h4 className="text-white font-bold text-xs mb-3 uppercase tracking-wider drop-shadow">Skills</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {item.skills.map((skill, i) => (
+                                <span key={i} className="bg-white/20 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full border border-white/30 drop-shadow">
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Organizations */}
+                          <div>
+                            <h4 className="text-white font-bold text-xs mb-3 uppercase tracking-wider drop-shadow">Teams</h4>
+                            <div className="space-y-2">
+                              {item.organizations.map((org, i) => (
+                                <div key={i} className="flex items-start">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-white/80 mt-2 mr-3 flex-shrink-0"></div>
+                                  <span className="text-white/95 text-sm leading-relaxed drop-shadow">{org}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Close Button */}
+                        <button
+                          onClick={() => toggleCard('internships', actualIdx)}
+                          className="mt-6 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full w-10 h-10 flex items-center justify-center self-end transition-all hover:scale-105 border border-white/30"
+                        >
+                          <svg className="w-5 h-5 text-white drop-shadow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -309,33 +409,6 @@ export default function AboutMe() {
             })}
           </div>
 
-          {/* Navigation Arrows */}
-          <div className="flex justify-center gap-4 mt-8">
-            <button 
-              onClick={() => setInternshipPage(Math.max(0, internshipPage - 1))}
-              disabled={internshipPage === 0}
-              className={`w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center transition ${
-                internshipPage === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-stone-100'
-              }`}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button 
-              onClick={() => setInternshipPage(Math.min(totalInternshipPages - 1, internshipPage + 1))}
-              disabled={internshipPage === totalInternshipPages - 1}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
-                internshipPage === totalInternshipPages - 1 
-                  ? 'bg-stone-300 cursor-not-allowed' 
-                  : 'bg-stone-900 text-white hover:bg-stone-800'
-              }`}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
         </div>
       </section>
 

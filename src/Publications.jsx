@@ -34,60 +34,24 @@ export default function Publications() {
   const conferencePublications = [
     {
       id: 1,
-      title: 'Adaptive Robotic Systems for Assistive Care',
-      authors: 'Evolone Layne, Maya Cakmak, Siddhartha Srinivasa',
-      venue: 'IEEE International Conference on Robotics and Automation (ICRA)',
+      title: 'Attitudes towards Humanoid Robots for In-Home Assistance',
+      authors: 'Radka, B., Layne E., & Cakmak, M.',
+      venue: 'IEEE International Conference on Robot and Human Interactive Communication (RO-MAN)',
       year: '2025',
       type: 'Conference Paper',
-      pdf: 'conference-paper-1.pdf'
-    },
-    {
-      id: 2,
-      title: 'Human-Robot Interaction in Domestic Environments',
-      authors: 'Evolone Layne, Jane Smith, John Doe',
-      venue: 'ACM/IEEE International Conference on Human-Robot Interaction (HRI)',
-      year: '2025',
-      type: 'Conference Paper',
-      pdf: 'conference-paper-2.pdf'
-    },
-    {
-      id: 3,
-      title: 'Learning User Preferences for Personalized Assistance',
-      authors: 'Evolone Layne, Maya Cakmak',
-      venue: 'Conference on Robot Learning (CoRL)',
-      year: '2024',
-      type: 'Conference Paper',
-      pdf: 'conference-paper-3.pdf'
+      pdf: 'https://ieeexplore.ieee.org/document/11217783'
     }
   ];
 
   const workshopPublications = [
     {
       id: 1,
-      title: 'Empowering Communities Through AI Education',
-      authors: 'Evolone Layne',
-      venue: 'NeurIPS Workshop on AI for Social Good',
-      year: '2024',
+      title: 'Replicating Bugs Faster',
+      authors: 'Layne E. and Mostow, J.',
+      venue: 'Working Papers Journal 9, pp. 155-156',
+      year: '2021',
       type: 'Workshop Paper',
-      pdf: 'workshop-paper-1.pdf'
-    },
-    {
-      id: 2,
-      title: 'Bridging the Digital Divide with Accessible Robotics',
-      authors: 'Evolone Layne, Community Partners',
-      venue: 'AAAI Workshop on AI and Accessibility',
-      year: '2024',
-      type: 'Workshop Paper',
-      pdf: 'workshop-paper-2.pdf'
-    },
-    {
-      id: 3,
-      title: 'Music Generation Using Machine Learning',
-      authors: 'Evolone Layne',
-      venue: 'ICML Workshop on Machine Learning for Creativity',
-      year: '2024',
-      type: 'Workshop Paper',
-      pdf: 'workshop-paper-3.pdf'
+      pdf: 'https://riss.ri.cmu.edu/wp-content/uploads/2021/10/2021-CMU-RoboticsInstitute_SummerScholars-WorkingPapersJournal-Sized-compressed.pdf'
     }
   ];
 
@@ -101,7 +65,7 @@ export default function Publications() {
             <a href="/" className="hover:text-stone-600 transition">Home</a>
             <a href="/projects" className="hover:text-stone-600 transition">Projects</a>
             <a href="/publications" className="hover:text-stone-600 transition font-semibold">Publications</a>
-            <a href="/#about" className="hover:text-stone-600 transition">About Me</a>
+            <a href="/about" className="hover:text-stone-600 transition">About Me</a>
           </div>
         </div>
       </nav>
@@ -173,12 +137,19 @@ export default function Publications() {
                       <p className="text-sm text-stone-700 italic">{pub.venue}</p>
                     </div>
 
-                    {/* PDF Icon */}
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-stone-100 group-hover:bg-stone-900 flex items-center justify-center transition-all">
-                      <svg className="w-5 h-5 text-stone-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
+                    {/* PDF Icon - only show if PDF exists */}
+                    {pub.pdf && (
+                      <a 
+                        href={pub.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-shrink-0 w-12 h-12 rounded-full bg-stone-100 group-hover:bg-stone-900 flex items-center justify-center transition-all"
+                      >
+                        <svg className="w-5 h-5 text-stone-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}
@@ -221,12 +192,19 @@ export default function Publications() {
                       <p className="text-sm text-stone-700 italic">{pub.venue}</p>
                     </div>
 
-                    {/* PDF Icon */}
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white group-hover:bg-stone-900 flex items-center justify-center transition-all">
-                      <svg className="w-5 h-5 text-stone-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
+                    {/* PDF Icon - only show if PDF exists */}
+                    {pub.pdf && (
+                      <a 
+                        href={pub.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-shrink-0 w-12 h-12 rounded-full bg-white group-hover:bg-stone-900 flex items-center justify-center transition-all"
+                      >
+                        <svg className="w-5 h-5 text-stone-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}
