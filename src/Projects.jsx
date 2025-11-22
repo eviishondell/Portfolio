@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+
 
 function useScrollAnimation() {
   const [isVisible, setIsVisible] = useState(false);
@@ -75,7 +77,8 @@ function ProjectCarousel({ projects, visible, variant = 'light' }) {
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {projects.map((project, idx) => (
-<div
+<Link
+  to={project.link}
   key={project.id}
   className={`flex-shrink-0 w-[calc(33.333%-1rem)] min-w-[280px] ${cardBg} rounded-2xl overflow-hidden hover:-translate-y-1 transition-all duration-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
   style={{ 
@@ -109,7 +112,7 @@ function ProjectCarousel({ projects, visible, variant = 'light' }) {
       ))}
     </div>
   </div>
-</div>
+</Link>
         ))}
       </div>
 
@@ -152,21 +155,24 @@ const roboticsProjects = [
     title: 'VLA Framework for Mobile Impairments',
     description: 'Designing a comprehensive framework to guide the development of vision-language-action robot foundation models that better serve users with mobility impairments.',
     image: '/img/vla.png',
-    tags: ['Robotics', 'AI', 'Accessibility', 'HRI']
+    tags: ['Robotics', 'AI', 'Accessibility', 'HRI'],
+    link: '/Projects/vla-framework'
   },
   {
     id: 2,
     title: 'Articutool: Assistive Feeding Research',
     description: 'Conducting human factors research on robotic feeding assistance systems to inform the design and development of Articutool for users with mobility impairments.',
     image: '/img/ADA.png',
-    tags: ['HRI', 'Research', 'Assistive Tech']
+    tags: ['HRI', 'Research', 'Assistive Tech'],
+    link: '/Projects/articutool'
   },
   {
     id: 3,
     title: 'Humanoid Robots in Home Environments',
     description: 'Exploring user perceptions and acceptance of humanoid robots in domestic settings through qualitative user studies and ethnographic research to inform future design of assistive technologies.',
     image: '/img/humanoid.png',
-    tags: ['User Studies', 'Robotics', 'HRI']
+    tags: ['User Studies', 'Robotics', 'HRI'],
+    link: '/Projects/humanoid-robots'
   }
 ];
 
@@ -176,28 +182,32 @@ const softwareProjects = [
     title: 'Data Visualization for Cycle Tracking',
     description: 'Platform that merges music composition with artificial intelligence for creative experiences.',
     image: '/img/cycle-track.png',
-    tags: ['AI', 'Music', 'Web Development']
+    tags: ['AI', 'Music', 'Web Development'],
+    link: '/Projects/cycle-tracking'
   },
   {
     id: 2,
     title: 'Self-Diagnosing PMDD',
     description: 'Mobile application designed to connect and empower underrepresented communities through technology.',
     image: '/img/pmdd.png',
-    tags: ['Mobile', 'Social Impact', 'React Native']
+    tags: ['Mobile', 'Social Impact', 'React Native'],
+    link: '/projects/pmdd'
   },
   {
     id: 3,
     title: 'Smartstack Watch Face',
     description: 'Virtual reality platform for immersive STEM education in underserved schools.',
     image: '/img/siri.png',
-    tags: ['VR', 'Education', 'Unity']
+    tags: ['VR', 'Education', 'Unity'],
+    link: '/Projects/smartstack'
   },
   {
     id: 4,
     title: 'WatchOS Color Picker',
     description: 'Virtual reality platform for immersive STEM education in underserved schools.',
     image: '/img/color-pick.png',
-    tags: ['VR', 'Education', 'Unity']
+    tags: ['VR', 'Education', 'Unity'],
+    link: '/Projects/color-picker'
   }
 ];
 
