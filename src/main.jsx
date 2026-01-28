@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Portfolio from './Portfolio.jsx'
 import Projects from './Projects.jsx'
 import Publications from './Publications.jsx'
-import AboutMe from './AboutMe.jsx'
+import AboutMe from './Aboutme.jsx'
 import PMDDProject from './ProjectPages/pmdd-proj.jsx'
 import './index.css'
 
