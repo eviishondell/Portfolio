@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import React, { useState, useEffect, useRef } from 'react';
 
 function useScrollAnimation() {
@@ -36,31 +37,31 @@ export default function Portfolio() {
   const [aboutRef, aboutVisible] = useScrollAnimation();
 
   const mediaAppearances = [
-    {
-      title: 'Glamour Magazine',
-      description: 'Evolone merges music and AI to build powerful experiences.',
-      image: '/img/glamour-img.png',
-      url: 'https://www.glamour.com/story/hbcu-college-woman-of-the-year-evolone-layne'
-    },
-    {
-      title: 'BET',
-      description: 'Evolone uses AI to empower underrepresented communities.',
-      image: '/img/bet-img.png',
-      url: 'https://www.bet.com/article/lqo08m/glamour-cwoty-evolone-layne'
-    },
-    {
-      title: 'Grow with Google',
-      description: 'When Evolone became a mentor, she was inspired to do more in her own career.',
-      image: '/img/google-img.png',
-      url: 'https://www.youtube.com/watch?v=6K8tKDz-sTk'
-    },
-    {
-      title: 'Google for Developers',
-      description: 'Meet Evolone, Google Developer Student Club Lead at Howard University in Washington, D.C..',
-      image: '/img/gdev-img.png',
-      url: 'https://www.youtube.com/watch?v=3Ro9NvQiYzM'
-    }
-  ];
+  {
+    title: 'Glamour Magazine',
+    description: 'Evolone merges music and AI to build powerful experiences.',
+    image: '/Portfolio/img/glamour-img.png',
+    url: 'https://www.glamour.com/story/hbcu-college-woman-of-the-year-evolone-layne'
+  },
+  {
+    title: 'BET',
+    description: 'Evolone uses AI to empower underrepresented communities.',
+    image: '/Portfolio/img/bet-img.png',
+    url: 'https://www.bet.com/article/lqo08m/glamour-cwoty-evolone-layne'
+  },
+  {
+    title: 'Grow with Google',
+    description: 'When Evolone became a mentor, she was inspired to do more in her own career.',
+    image: '/Portfolio/img/google-img.png',
+    url: 'https://www.youtube.com/watch?v=6K8tKDz-sTk'
+  },
+  {
+    title: 'Google for Developers',
+    description: 'Meet Evolone, Google Developer Student Club Lead at Howard University in Washington, D.C..',
+    image: '/Portfolio/img/gdev-img.png',
+    url: 'https://www.youtube.com/watch?v=3Ro9NvQiYzM'
+  }
+];
 
   const mediaPerPage = 4;
   const totalMediaPages = Math.ceil(mediaAppearances.length / mediaPerPage);
@@ -74,16 +75,16 @@ export default function Portfolio() {
     <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-stone-100 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 bg-stone-100 z-50 border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-light tracking-wide">EVOLONE</div>
-          <div className="flex gap-8 text-sm">
-            <a href="#home" className="hover:text-stone-600 transition">Home</a>
-            <a href="/projects" className="hover:text-stone-600 transition">Projects</a>
-            <a href="/publications" className="hover:text-stone-600 transition">Publications</a>
-            <a href="/about" className="hover:text-stone-600 transition">About Me</a>
-          </div>
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="text-2xl font-light tracking-wide">EVOLONE</div>
+        <div className="flex gap-8 text-sm">
+          <a href="#home" className="hover:text-stone-600 transition">Home</a>
+          <Link to="/projects" className="hover:text-stone-600 transition">Projects</Link>
+          <Link to="/publications" className="hover:text-stone-600 transition">Publications</Link>
+          <Link to="/about" className="hover:text-stone-600 transition">About Me</Link>
         </div>
-      </nav>
+      </div>
+    </nav>
 
 {/* Hero Section - Apple Style with Animations */}
 <section ref={heroRef} className="bg-white snap-start snap-always min-h-screen relative" id="home">
@@ -150,7 +151,7 @@ export default function Portfolio() {
         <div className={`md:col-span-1 transition-all duration-1000 delay-200 ${aboutVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[3/4]">
             <img 
-              src="/img/profile-pic2.png" 
+              src="/Portfolio/img/profile-pic2.png"
               alt="Evolone Layne" 
               className="w-full h-full object-cover"
               style={{ 
