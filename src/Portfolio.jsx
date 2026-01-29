@@ -78,7 +78,7 @@ export default function Portfolio() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <div className="text-2xl font-light tracking-wide">EVOLONE</div>
         <div className="flex gap-8 text-sm">
-          <a href="#home" className="hover:text-stone-600 transition">Home</a>
+          <Link to="/" className="hover:text-stone-600 transition">Home</Link>
           <Link to="/projects" className="hover:text-stone-600 transition">Projects</Link>
           <Link to="/publications" className="hover:text-stone-600 transition">Publications</Link>
           <Link to="/about" className="hover:text-stone-600 transition">About Me</Link>
