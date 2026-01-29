@@ -58,17 +58,17 @@ export default function Publications() {
   return (
     <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-white font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <a href="/" className="text-2xl font-light tracking-wide">EVOLONE</a>
-          <div className="flex gap-8 text-sm">
-            <a href="/" className="hover:text-stone-600 transition">Home</a>
-            <a href="/projects" className="hover:text-stone-600 transition">Projects</a>
-            <a href="/publications" className="hover:text-stone-600 transition font-semibold">Publications</a>
-            <a href="/about" className="hover:text-stone-600 transition">About Me</a>
-          </div>
+      <nav className="fixed top-0 left-0 right-0 bg-stone-100 z-50 border-b border-stone-200">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="text-2xl font-light tracking-wide">EVOLONE</div>
+        <div className="flex gap-8 text-sm">
+          <a href="#home" className="hover:text-stone-600 transition">Home</a>
+          <Link to="/projects" className="hover:text-stone-600 transition">Projects</Link>
+          <Link to="/publications" className="hover:text-stone-600 transition">Publications</Link>
+          <Link to="/about" className="hover:text-stone-600 transition">About Me</Link>
         </div>
-      </nav>
+      </div>
+    </nav>
 
       {/* Hero Section */}
       <section ref={heroRef} className="bg-white snap-start snap-always min-h-screen relative">
