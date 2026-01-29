@@ -154,25 +154,25 @@ const roboticsProjects = [
     id: 1,
     title: 'VLA Framework for Mobile Impairments',
     description: 'Designing a comprehensive framework to guide the development of vision-language-action robot foundation models that better serve users with mobility impairments.',
-    image: '/img/vla.png',
+    image: '/Portfolio/img/vla.png',
     tags: ['Robotics', 'AI', 'Accessibility', 'HRI'],
-    link: '/Projects/vla-framework'
+    link: '/projects/vla-framework'
   },
   {
     id: 2,
     title: 'Articutool: Assistive Feeding Research',
     description: 'Conducting human factors research on robotic feeding assistance systems to inform the design and development of Articutool for users with mobility impairments.',
-    image: '/img/ADA.png',
+    image: '/Portfolio/img/ADA.png',
     tags: ['HRI', 'Research', 'Assistive Tech'],
-    link: '/Projects/articutool'
+    link: '/projects/articutool'
   },
   {
     id: 3,
     title: 'Humanoid Robots in Home Environments',
     description: 'Exploring user perceptions and acceptance of humanoid robots in domestic settings through qualitative user studies and ethnographic research to inform future design of assistive technologies.',
-    image: '/img/humanoid.png',
+    image: '/Portfolio/img/humanoid.png',
     tags: ['User Studies', 'Robotics', 'HRI'],
-    link: '/Projects/humanoid-robots'
+    link: '/projects/humanoid-robots'
   }
 ];
 
@@ -181,15 +181,15 @@ const softwareProjects = [
     id: 1,
     title: 'Data Visualization for Cycle Tracking',
     description: 'Platform that merges music composition with artificial intelligence for creative experiences.',
-    image: '/img/cycle-track.png',
+    image: '/Portfolio/img/cycle-track.png',
     tags: ['AI', 'Music', 'Web Development'],
-    link: '/Projects/cycle-tracking'
+    link: '/projects/cycle-tracking'
   },
   {
     id: 2,
     title: 'Self-Diagnosing PMDD',
     description: 'Mobile application designed to connect and empower underrepresented communities through technology.',
-    image: '/img/pmdd.png',
+    image: '/Portfolio/img/pmdd.png',
     tags: ['Mobile', 'Social Impact', 'React Native'],
     link: '/projects/pmdd'
   },
@@ -197,17 +197,17 @@ const softwareProjects = [
     id: 3,
     title: 'Smartstack Watch Face',
     description: 'Virtual reality platform for immersive STEM education in underserved schools.',
-    image: '/img/siri.png',
+    image: '/Portfolio/img/siri.png',
     tags: ['VR', 'Education', 'Unity'],
-    link: '/Projects/smartstack'
+    link: '/projects/smartstack'
   },
   {
     id: 4,
     title: 'WatchOS Color Picker',
     description: 'Virtual reality platform for immersive STEM education in underserved schools.',
-    image: '/img/color-pick.png',
+    image: '/Portfolio/img/color-pick.png',
     tags: ['VR', 'Education', 'Unity'],
-    link: '/Projects/color-picker'
+    link: '/projects/color-picker'
   }
 ];
 
