@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 function useScrollAnimation() {
   const [isVisible, setIsVisible] = useState(false);
@@ -65,58 +66,58 @@ export default function AboutMe() {
   };
 
   const education = [
-    {
-      title: 'Howard University.',
-      degree: 'Bachelor of Science in Computer Science',
-      years: '2020-2023',
-      image: '/img/hu-img.png',
-      fellowships: ['Thurgood Marshall College Fund Apple Scholarship', 'Crown Castle Opportunity Scholarship', 'Howard University Capstone Scholarship '],
-      organizations: ['National Society of Black Engineers', 'Google Developer Student Club', 'ColorStack Undergraduate Chapter']
-    },
-    {
-      title: 'Carnegie Mellon University.',
-      degree: 'Master of Human-Computer Interaction',
-      years: '2024-2025',
-      image: '/img/cmu-img.png',
-      fellowships: ['National GEM Consortium Fellowship (Apple)', 'Carnegie Mellon University Robotics Pathways Fellowship'],
-      organizations: ['National Society of Black Engineers', 'Graduate Student Assembly', 'ColorStack Graduate Chapter']
-    },
-    {
-      title: 'University of Washington.',
-      degree: 'Doctorate of Philosophy in Computer Science & Engineering',
-      years: '2025-2030',
-      image: '/img/uw-img.png',
-      fellowships: ['National GEM Consortium Fellowship (MIT Lincoln Lab)', 'University of Washington College of Engineering Dean’s Fellowship','Herbold Fellowship', 'Donar Fellowship'],
-      organizations: ['National Society of Black Engineers', 'ColorStack' ]
-    }
-  ];
+  {
+    title: 'Howard University.',
+    degree: 'Bachelor of Science in Computer Science',
+    years: '2020-2023',
+    image: '/Portfolio/img/hu-img.png',
+    fellowships: ['Thurgood Marshall College Fund Apple Scholarship', 'Crown Castle Opportunity Scholarship', 'Howard University Capstone Scholarship '],
+    organizations: ['National Society of Black Engineers', 'Google Developer Student Club', 'ColorStack Undergraduate Chapter']
+  },
+  {
+    title: 'Carnegie Mellon University.',
+    degree: 'Master of Human-Computer Interaction',
+    years: '2024-2025',
+    image: '/Portfolio/img/cmu-img.png',
+    fellowships: ['National GEM Consortium Fellowship (Apple)', 'Carnegie Mellon University Robotics Pathways Fellowship'],
+    organizations: ['National Society of Black Engineers', 'Graduate Student Assembly', 'ColorStack Graduate Chapter']
+  },
+  {
+    title: 'University of Washington.',
+    degree: 'Doctorate of Philosophy in Computer Science & Engineering',
+    years: '2025-2030',
+    image: '/Portfolio/img/uw-img.png',
+    fellowships: ['National GEM Consortium Fellowship (MIT Lincoln Lab)', 'University of Washington College of Engineering Dean\'s Fellowship','Herbold Fellowship', 'Donar Fellowship'],
+    organizations: ['National Society of Black Engineers', 'ColorStack' ]
+  }
+];
 
   const internships = [
-    {
-      title: 'Apple.',
-      role: 'Software Engineering Intern',
-      years: '2022-2024',
-      image: '/img/apple-img.png',
-      skills: ['Swift', 'iOS Development', 'UIKit', 'SwiftUI'],
-      organizations: ['Watch Frameworks','Health Sensing Experience', 'Watch Complications']
-    },
-    {
-      title: 'NASA.',
-      role: 'Research & Development Intern',
-      years: '2025',
-      image: '/img/nasa-img.png',
-      skills: ['Swift', 'Data Visualization', 'Research', 'Rapid Prototyping'],
-      organizations: ['Human-Computer Interaction']
-    },
-    {
-      title: 'MIT Lincoln Laboratory.',
-      role: 'Research & Development Intern',
-      years: '2025-Present',
-      image: '/img/mit-img.png',
-      skills: ['React.js', 'Research', 'User Studies', 'Data Analysis'],
-      organizations: ['Group 42 - Transportation Safety & Resiliance ']
-    }
-  ];
+  {
+    title: 'Apple.',
+    role: 'Software Engineering Intern',
+    years: '2022-2024',
+    image: '/Portfolio/img/apple-img.png',
+    skills: ['Swift', 'iOS Development', 'UIKit', 'SwiftUI'],
+    organizations: ['Watch Frameworks','Health Sensing Experience', 'Watch Complications']
+  },
+  {
+    title: 'NASA.',
+    role: 'Research & Development Intern',
+    years: '2025',
+    image: '/Portfolio/img/nasa-img.png',
+    skills: ['Swift', 'Data Visualization', 'Research', 'Rapid Prototyping'],
+    organizations: ['Human-Computer Interaction']
+  },
+  {
+    title: 'MIT Lincoln Laboratory.',
+    role: 'Research & Development Intern',
+    years: '2025-Present',
+    image: '/Portfolio/img/mit-img.png',
+    skills: ['React.js', 'Research', 'User Studies', 'Data Analysis'],
+    organizations: ['Group 42 - Transportation Safety & Resiliance ']
+  }
+];
 
   const internshipsPerPage = 3;
   const totalInternshipPages = Math.ceil(internships.length / internshipsPerPage);
