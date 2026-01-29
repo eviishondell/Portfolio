@@ -111,7 +111,7 @@ export default function Portfolio() {
         </a>
         <span className="hidden sm:block text-stone-300">|</span>
         <a 
-          href="/cv/Layne_Evolone_CV.pdf"
+          href="/Portfolio/cv/Layne_Evolone_CV.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-700 text-lg font-normal hover:underline transition-all"
