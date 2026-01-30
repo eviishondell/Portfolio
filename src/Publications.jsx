@@ -34,28 +34,37 @@ export default function Publications() {
   const [workshopRef, workshopVisible] = useScrollAnimation();
 
   const conferencePublications = [
-    {
-      id: 1,
-      title: "Attitudes towards Humanoid Robots for In-Home Assistance",
-      authors: "Radka, B., Layne E., & Cakmak, M.",
-      venue: "IEEE International Conference on Robot and Human Interactive Communication (RO-MAN)",
-      year: "2025",
-      type: "Conference Paper",
-      pdf: "https://ieeexplore.ieee.org/document/11217783",
-    },
-  ];
+  {
+    id: 1,
+    title: "Attitudes towards Humanoid Robots for In-Home Assistance",
+    authors: "Radka, B., Layne, E., & Cakmak, M.",
+    venue: "IEEE International Conference on Robot and Human Interactive Communication (RO-MAN)",
+    year: "2024",
+    type: "Conference Paper",
+    pdf: "https://ieeexplore.ieee.org/document/11217783",
+  },
+];
 
-  const workshopPublications = [
-    {
-      id: 1,
-      title: "Replicating Bugs Faster",
-      authors: "Layne E. and Mostow, J.",
-      venue: "Working Papers Journal 9, pp. 155-156",
-      year: "2021",
-      type: "Workshop Paper",
-      pdf: "https://riss.ri.cmu.edu/wp-content/uploads/2021/10/2021-CMU-RoboticsInstitute_SummerScholars-WorkingPapersJournal-Sized-compressed.pdf",
-    },
-  ];
+const workshopPublications = [
+  {
+    id: 1,
+    title: "Humanoid Robots in the Wild: A Digital Ethnography of Online Videos",
+    authors: "Layne, E. & Cakmak, M.",
+    venue: "ACM/IEEE International Conference on Human-Robot Interaction (HRI) - Late Breaking Report",
+    year: "2025",
+    type: "Late Breaking Report",
+    pdf: "/Portfolio/publications/Meta_HRI_Humanoid_Paper.pdf",
+  },
+  {
+    id: 2,
+    title: "Replicating Bugs Faster",
+    authors: "Layne, E. & Mostow, J.",
+    venue: "Working Papers Journal 9, pp. 155-156",
+    year: "2021",
+    type: "Workshop Paper",
+    pdf: "https://riss.ri.cmu.edu/wp-content/uploads/2021/10/2021-CMU-RoboticsInstitute_SummerScholars-WorkingPapersJournal-Sized-compressed.pdf",
+  },
+];
 
   return (
     <div className="font-sans bg-white">
