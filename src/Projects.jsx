@@ -152,27 +152,27 @@ export default function Projects() {
 const roboticsProjects = [
   {
     id: 1,
-    title: 'VLA Framework for Mobile Impairments',
-    description: 'Designing a comprehensive framework to guide the development of vision-language-action robot foundation models that better serve users with mobility impairments.',
-    image: '/Portfolio/img/vla.png',
-    tags: ['Robotics', 'AI', 'Accessibility', 'HRI'],
-    link: '/projects/vla-framework'
+    title: 'Humanoid Robots in the Wild: Digital Ethnography',
+    description: 'Analyzing naturalistic human-humanoid robot interactions through digital ethnography of online videos, revealing proximity patterns, personalization behaviors, and anthropomorphization tendencies that challenge existing HRI research assumptions.',
+    image: '/Portfolio/img/abuse_of_robot.png',
+    tags: ['Digital Ethnography', 'HRI', 'Consumer Robotics'],
+    link: '/projects/humanoid-ethnography'
   },
   {
     id: 2,
-    title: 'Articutool: Assistive Feeding Research',
-    description: 'Conducting human factors research on robotic feeding assistance systems to inform the design and development of Articutool for users with mobility impairments.',
-    image: '/Portfolio/img/ADA.png',
-    tags: ['HRI', 'Research', 'Assistive Tech'],
-    link: '/projects/articutool'
+    title: 'Privacy-Utility Tradeoffs in Assistive Robotics',
+    description: 'Updating foundational privacy-utility frameworks for modern assistive robotics contexts, examining how users balance privacy concerns with functional benefits in home-based robot systems.',
+    image: '/Portfolio/img/neo.png',
+    tags: ['Privacy', 'Assistive Robotics', 'User Studies'],
+    link: '/projects/privacy-utility'
   },
   {
     id: 3,
-    title: 'Humanoid Robots in Home Environments',
-    description: 'Exploring user perceptions and acceptance of humanoid robots in domestic settings through qualitative user studies and ethnographic research to inform future design of assistive technologies.',
-    image: '/Portfolio/img/humanoid.png',
-    tags: ['User Studies', 'Robotics', 'HRI'],
-    link: '/projects/humanoid-robots'
+    title: 'Attitudes Towards Humanoid Robots for In-Home Assistance',
+    description: 'Investigating user perceptions and acceptance of humanoid robots in domestic settings through qualitative research to inform the design of future assistive technologies.',
+    image: '/Portfolio/img/in-home.jpg',
+    tags: ['User Studies', 'HRI', 'Assistive Tech'],
+    link: '/projects/humanoid-attitudes'
   }
 ];
 

@@ -50,7 +50,7 @@ const workshopPublications = [
     id: 1,
     title: "Humanoid Robots in the Wild: A Digital Ethnography of Online Videos",
     authors: "Layne, E. & Cakmak, M.",
-    venue: "ACM/IEEE International Conference on Human-Robot Interaction (HRI) - Late Breaking Report",
+    venue: "ACM/IEEE International Conference on Human-Robot Interaction (HRI) - Meta Special Session",
     year: "2025",
     type: "Late Breaking Report",
     pdf: "/Portfolio/publications/Meta_HRI_Humanoid_Paper.pdf",
