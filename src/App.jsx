@@ -125,7 +125,7 @@ const press = [
     outlet: 'The Hilltop',
     headline: "Howard Student Named Glamour's College Women of the Year",
     year: 2022,
-    link: null,
+    link: 'https://thehilltoponline.com/2022/11/16/howard-student-named-glamours-college-women-of-the-year/',
   },
   {
     outlet: 'Google for Developers',
