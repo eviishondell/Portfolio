@@ -216,6 +216,34 @@ nav {
 }
 .about-bio { display: flex; flex-direction: column; gap: 1.25rem; }
 .about-body { font-size: 1.05rem; line-height: 1.8; color: var(--stone-700); }
+
+.education { display: flex; flex-direction: column; gap: 0.6rem; }
+.edu-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--stone-200);
+}
+.edu-row:last-child { border-bottom: none; padding-bottom: 0; }
+.edu-main { display: flex; flex-direction: column; gap: 0.1rem; }
+.edu-school {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--stone-900);
+}
+.edu-degree {
+  font-size: 0.8rem;
+  color: var(--stone-500);
+}
+.edu-year {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--stone-400);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 .about-name {
   font-size: 2.25rem;
   font-weight: 600;

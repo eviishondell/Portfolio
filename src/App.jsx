@@ -170,6 +170,30 @@ export default function App() {
                 <span>University of Washington</span>
                 <span className="advisor">Advised by Maya Cakmak, Human-Centered Robotics Lab</span>
               </div>
+              <div className="education">
+                <div className="edu-row">
+                  <div className="edu-main">
+                    <span className="edu-school">University of Washington</span>
+                    <span className="edu-degree">Ph.D., Computer Science &amp; Engineering</span>
+                  </div>
+                  <span className="edu-year">2030</span>
+                </div>
+                <div className="edu-row">
+                  <div className="edu-main">
+                    <span className="edu-school">Carnegie Mellon University</span>
+                    <span className="edu-degree">M.HCI, School of Computer Science</span>
+                  </div>
+                  <span className="edu-year">2025</span>
+                </div>
+                <div className="edu-row">
+                  <div className="edu-main">
+                    <span className="edu-school">Howard University</span>
+                    <span className="edu-degree">B.S., Computer Science</span>
+                  </div>
+                  <span className="edu-year">2023</span>
+                </div>
+              </div>
+
               <p className="about-body">
                 I study how people form trusting relationships with domestic robots across the full
                 spectrum of human presence in the home: residents, guests, and caregivers. I design
