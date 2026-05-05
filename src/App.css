@@ -320,7 +320,7 @@ nav {
   padding-bottom: 0;
   overflow: hidden;
 }
-.section-research .papers {
+.section-research .paper-groups {
   flex: 1;
   overflow-y: auto;
   padding-bottom: 3rem;
