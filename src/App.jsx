@@ -108,6 +108,39 @@ const papers = [
   },
 ];
 
+const press = [
+  {
+    outlet: 'Glamour',
+    headline: 'Evolone Layne Is Taking Over STEM, One App at a Time',
+    year: 2022,
+    link: null,
+  },
+  {
+    outlet: 'BET',
+    headline: 'Evolone Layne Is Taking Over STEM, One App at a Time',
+    year: 2022,
+    link: null,
+  },
+  {
+    outlet: 'The Hilltop',
+    headline: "Howard Student Named Glamour's College Women of the Year",
+    year: 2022,
+    link: null,
+  },
+  {
+    outlet: 'Google',
+    headline: "Finding the Leader Inside: Evolone's Story as a GDSC Lead at Howard University",
+    year: 2023,
+    link: null,
+  },
+  {
+    outlet: 'Grow with Google',
+    headline: 'Watch what we do: Evolone Layne',
+    year: 2023,
+    link: null,
+  },
+];
+
 const groups = [
   { label: 'In Progress',         key: 'in-progress' },
   { label: 'Conference Papers',   key: 'conference'  },
@@ -132,6 +165,7 @@ export default function App() {
             <li><a href="#about"    onClick={e => navTo(e, 'about')}>about</a></li>
             <li><a href="#vision"   onClick={e => navTo(e, 'vision')}>vision</a></li>
             <li><a href="#research" onClick={e => navTo(e, 'research')}>research</a></li>
+            <li><a href="#press"    onClick={e => navTo(e, 'press')}>press</a></li>
             <li><a href="mailto:evolone@uw.edu">contact</a></li>
           </ul>
         </div>
@@ -250,6 +284,29 @@ export default function App() {
                 label={label}
                 papers={papers.filter(p => p.type === key)}
               />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRESS */}
+      <section className="snap-section section-content bg-white" id="press">
+        <div className="section-inner">
+          <h2 className="section-heading">Press</h2>
+          <p className="section-sub">Media appearances and coverage.</p>
+          <div className="press-list">
+            {press.map((item, i) => (
+              <div key={i} className="press-item">
+                <div className="press-meta">
+                  <span className="press-outlet">{item.outlet}</span>
+                  <span className="press-year">{item.year}</span>
+                </div>
+                <p className="press-headline">
+                  {item.link
+                    ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.headline} ↗</a>
+                    : item.headline}
+                </p>
+              </div>
             ))}
           </div>
         </div>

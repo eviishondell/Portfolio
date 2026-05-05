@@ -441,6 +441,49 @@ nav {
 }
 .paper-link:hover { opacity: 0.72; }
 
+/* ── PRESS ───────────────────────────────────────────── */
+.press-list { display: flex; flex-direction: column; gap: 0; }
+.press-item {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--stone-200);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.press-item:first-child { border-top: 1px solid var(--stone-200); }
+.press-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.press-outlet {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.press-year {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--stone-400);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.press-headline {
+  font-size: 1rem;
+  color: var(--stone-800);
+  line-height: 1.5;
+}
+.press-headline a {
+  color: var(--stone-900);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.press-headline a:hover { color: var(--accent); }
+
 /* ── FOOTER ──────────────────────────────────────────── */
 footer {
   background: var(--white);
