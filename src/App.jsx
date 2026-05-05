@@ -2,6 +2,11 @@ import './App.css';
 
 const BASE = import.meta.env.BASE_URL;
 
+function navTo(e, id) {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function Paper({ title, authors, venue, abstract, tags, year, status, link }) {
   const statusClass = status === 'published' ? 'badge-status-published' : 'badge-status-progress';
   return (
@@ -124,9 +129,9 @@ export default function App() {
         <div className="nav-inner">
           <a href="#" className="nav-name">Evolone Layne</a>
           <ul className="nav-links">
-            <li><a href="#about">about</a></li>
-            <li><a href="#vision">vision</a></li>
-            <li><a href="#research">research</a></li>
+            <li><a href="#about"    onClick={e => navTo(e, 'about')}>about</a></li>
+            <li><a href="#vision"   onClick={e => navTo(e, 'vision')}>vision</a></li>
+            <li><a href="#research" onClick={e => navTo(e, 'research')}>research</a></li>
             <li><a href="mailto:evolone@uw.edu">contact</a></li>
           </ul>
         </div>
