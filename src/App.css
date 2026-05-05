@@ -328,6 +328,20 @@ nav {
   mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
+/* ── PAPER GROUPS ────────────────────────────────────── */
+.paper-groups { display: flex; flex-direction: column; gap: 2.5rem; }
+
+.paper-group-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--stone-200);
+}
+
 /* ── PAPERS ──────────────────────────────────────────── */
 .papers { display: flex; flex-direction: column; gap: 1rem; }
 .paper {

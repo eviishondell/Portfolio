@@ -1,5 +1,7 @@
 import './App.css';
 
+const BASE = import.meta.env.BASE_URL;
+
 function Paper({ title, authors, venue, abstract, tags, year, status, link }) {
   const statusClass = status === 'published' ? 'badge-status-published' : 'badge-status-progress';
   return (
@@ -31,9 +33,22 @@ function Paper({ title, authors, venue, abstract, tags, year, status, link }) {
   );
 }
 
+function PaperGroup({ label, papers }) {
+  if (!papers.length) return null;
+  return (
+    <div className="paper-group">
+      <h3 className="paper-group-label">{label}</h3>
+      <div className="papers">
+        {papers.map(p => <Paper key={p.title} {...p} />)}
+      </div>
+    </div>
+  );
+}
+
 const papers = [
   {
     year: 2026,
+    type: 'in-progress',
     title: 'Privacy Perceptions and Precautions for Teleoperated Humanoid Robots in the Home',
     authors: [{ name: 'Evolone Layne', highlight: true }, { name: 'Maya Cakmak' }],
     venue: 'In preparation, target submission 2026',
@@ -44,6 +59,7 @@ const papers = [
   },
   {
     year: 2026,
+    type: 'conference',
     title: 'Humanoid Robots in the Wild: A Digital Ethnography via Social Media Videos',
     authors: [{ name: 'Evolone Layne', highlight: true }, { name: 'Maya Cakmak' }],
     venue: 'IEEE International Conference on Robot and Human Interactive Communication (RO-MAN)',
@@ -53,17 +69,8 @@ const papers = [
     link: null,
   },
   {
-    year: 2026,
-    title: 'Humanoid Robots in the Wild: A Digital Ethnography of Online Videos',
-    authors: [{ name: 'Evolone Layne', highlight: true }, { name: 'Maya Cakmak' }],
-    venue: 'Special Session on "HRI and Consumer Robots: Building Robots that are Useful and Acceptable" (Sponsored by Meta), ACM/IEEE International Conference on Human-Robot Interaction',
-    abstract: 'A digital ethnography of online video content capturing humanoid robots in real-world settings, examining how people interact with and respond to consumer humanoid robots in naturalistic contexts.',
-    tags: ['ethnography', 'humanoid', 'HRI'],
-    status: 'published',
-    link: null,
-  },
-  {
     year: 2025,
+    type: 'conference',
     title: 'Attitudes towards Humanoid Robots for In-Home Assistance',
     authors: [{ name: 'Basia Radka' }, { name: 'Evolone Layne', highlight: true }, { name: 'Maya Cakmak' }],
     venue: 'IEEE International Conference on Robot and Human Interactive Communication (RO-MAN)',
@@ -73,7 +80,19 @@ const papers = [
     link: null,
   },
   {
+    year: 2026,
+    type: 'workshop',
+    title: 'Humanoid Robots in the Wild: A Digital Ethnography of Online Videos',
+    authors: [{ name: 'Evolone Layne', highlight: true }, { name: 'Maya Cakmak' }],
+    venue: 'Special Session on "HRI and Consumer Robots: Building Robots that are Useful and Acceptable" (Sponsored by Meta), ACM/IEEE HRI 2026',
+    abstract: 'A digital ethnography of online video content capturing humanoid robots in real-world settings, examining how people interact with and respond to consumer humanoid robots in naturalistic contexts.',
+    tags: ['ethnography', 'humanoid', 'HRI'],
+    status: 'published',
+    link: null,
+  },
+  {
     year: 2021,
+    type: 'journal',
     title: 'Replicating Bugs Faster',
     authors: [{ name: 'Evolone Layne', highlight: true }, { name: 'Jack Mostow' }],
     venue: 'Working Papers Journal 9, pp. 155-156',
@@ -84,10 +103,17 @@ const papers = [
   },
 ];
 
+const groups = [
+  { label: 'In Progress',         key: 'in-progress' },
+  { label: 'Conference Papers',   key: 'conference'  },
+  { label: 'Workshop Papers',     key: 'workshop'    },
+  { label: 'Journal Articles',    key: 'journal'     },
+];
+
 const links = {
-  scholar: 'https://scholar.google.com/citations?user=Qr2faHcAAAAJ&hl=en',
-  cv: '/cv.pdf',
-  github: 'https://github.com/eviishondell',
+  scholar:  'https://scholar.google.com/citations?user=Qr2faHcAAAAJ&hl=en',
+  cv:       `${BASE}cv.pdf`,
+  github:   'https://github.com/eviishondell',
   linkedin: 'https://www.linkedin.com/in/evolonelayne',
 };
 
@@ -129,7 +155,7 @@ export default function App() {
           <div className="about-grid">
             <div>
               <div className="about-photo">
-                <img src="/headshot.png" alt="Evolone Layne" />
+                <img src={`${BASE}headshot.png`} alt="Evolone Layne" />
               </div>
             </div>
             <div className="about-bio">
@@ -146,9 +172,9 @@ export default function App() {
                 selectively helpful behavior — and I design from the margins first.
               </p>
               <div className="about-links">
-                <a href={links.scholar} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
-                <a href={links.cv} target="_blank" rel="noopener noreferrer">CV ↗</a>
-                <a href={links.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+                <a href={links.scholar}  target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+                <a href={links.cv}       target="_blank" rel="noopener noreferrer">CV ↗</a>
+                <a href={links.github}   target="_blank" rel="noopener noreferrer">GitHub ↗</a>
                 <a href={links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
               </div>
             </div>
@@ -188,8 +214,14 @@ export default function App() {
         <div className="section-inner">
           <h2 className="section-heading">Research</h2>
           <p className="section-sub">Papers, studies, and works in progress.</p>
-          <div className="papers">
-            {papers.map(paper => <Paper key={paper.title} {...paper} />)}
+          <div className="paper-groups">
+            {groups.map(({ label, key }) => (
+              <PaperGroup
+                key={key}
+                label={label}
+                papers={papers.filter(p => p.type === key)}
+              />
+            ))}
           </div>
         </div>
       </section>
