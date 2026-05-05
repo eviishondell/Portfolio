@@ -113,13 +113,13 @@ const press = [
     outlet: 'Glamour',
     headline: 'Evolone Layne Is Taking Over STEM, One App at a Time',
     year: 2022,
-    link: null,
+    link: 'https://www.glamour.com/story/hbcu-college-woman-of-the-year-evolone-layne',
   },
   {
     outlet: 'BET',
     headline: 'Evolone Layne Is Taking Over STEM, One App at a Time',
     year: 2022,
-    link: null,
+    link: 'https://www.bet.com/article/lqo08m/glamour-cwoty-evolone-layne',
   },
   {
     outlet: 'The Hilltop',
@@ -128,16 +128,16 @@ const press = [
     link: null,
   },
   {
-    outlet: 'Google',
+    outlet: 'Google for Developers',
     headline: "Finding the Leader Inside: Evolone's Story as a GDSC Lead at Howard University",
     year: 2023,
-    link: null,
+    link: 'https://www.youtube.com/watch?v=3Ro9NvQiYzM',
   },
   {
     outlet: 'Grow with Google',
     headline: 'Watch what we do: Evolone Layne',
     year: 2023,
-    link: null,
+    link: 'https://www.youtube.com/watch?v=6K8tKDz-sTk',
   },
 ];
 
